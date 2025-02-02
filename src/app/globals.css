@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes dance {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(5deg);
+  }
+}
+
+@keyframes zoomToFull {
+  0% {
+    transform: scale(2.4) translate(0, 0);  /* 77px / 32px ≈ 2.4 */
+  }
+  100% {
+    transform: scale(12) translate(25%, 25%);  /* Move towards center while zooming */
+  }
+}
+
+.dancing-blu3 {
+  position: relative;
+  z-index: 60;
+}
+
+.dancing-blu3 img {
+  animation: dance 2s ease-in-out infinite;
+  transform-origin: center center;  /* Change origin to center */
+  transition: transform 0.2s ease-out;
+  cursor: pointer;
+  position: relative;  /* Add position relative */
+}
+
+.dancing-blu3 img.zoomed {
+  animation: none;
+  transform: scale(2.4) translate(0, 0);  /* Initial zoom */
+}
+
+.dancing-blu3 img.zooming-full {
+  animation: zoomToFull 1s ease-in forwards;
+  position: fixed;  /* Fix position during full zoom */
+  left: 24px;  /* Adjust based on the px-6 from the parent */
+  top: 32px;   /* Center vertically in the header */
+}
+
+@keyframes letterBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes letterBounceMobile {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.letter-bounce {
+  animation: letterBounce 1s ease-in-out infinite;
+  animation-play-state: paused;
+  padding: 0 1px;  /* Add slight spacing between letters */
+  cursor: pointer;  /* Show pointer cursor to indicate interactivity */
+}
+
+/* Desktop hover */
+@media (hover: hover) {
+  .letter-bounce:hover {
+    animation-play-state: running;
+  }
+}
+
+/* Mobile touch */
+@media (hover: none) {
+  .letter-bounce {
+    animation: letterBounceMobile 1s ease-in-out infinite;
+  }
+  
+  .letter-bounce:active {
+    animation-play-state: running;
+    color: #2563eb; /* blue-600 color */
+  }
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
